@@ -2,7 +2,7 @@
 //
 //public class Test {
 //    public static void main(String[] args) throws FileNotFoundException {
-//        PrintWriter writer = new PrintWriter("test.txt");
+//        PrintWriter writer = new PrintWriter("testInput.txt");
 //        writer.println("The output is: ");
 //
 //        int[][] test = new int[30][30];

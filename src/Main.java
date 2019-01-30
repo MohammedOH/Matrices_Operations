@@ -2,51 +2,53 @@ import java.io.*;
 import java.util.Scanner;
 
 public class Main {
+    /* Main method */
     public static void main(String[] args) throws FileNotFoundException {
-        File input = new File("input.txt");
+        /* Input file to read data from it */
+        File input = new File("test.txt");
+        /* Scanner to read data from the file */
         Scanner readFile = new Scanner(input);
-
+        /* PrintWriter to Print result in (output.txt) file */
         PrintWriter writer = new PrintWriter("output.txt");
-
+        // No. of Tests must done
         final int TESTS = readFile.nextInt();
-        System.out.println(TESTS);
+        // Array to store  result
         int[][] result = new int[30][30];
 
-        int columnA, rowA, columnB, rowB, queries;
-
+        int queries;
+        // StringBuilder to read operation
         StringBuilder sb = new StringBuilder();
-
+        // Looping throw each Test
         for (int i = 1; i <= TESTS; i++) {
-            /* Creat matrix A */
+            /* Creat matrix A and get it Filled*/
             int[][] A = getArray(readFile);
-            // Matrix A content
-            getInput(A, readFile);
-
-            /* Creat matrix B */
+            /* Creat matrix B and get it Filled */
             int[][] B = getArray(readFile);
-            // Matrix B content
-            getInput(B, readFile);
-
             // No. of operations must be done
             queries = readFile.nextInt();
-
-            // Operations
+            // Printing output
+            writer.printf("Case #%d: \n", TESTS);
+            readFile.nextLine();
+            // Looping throw operations
             for (int j = 0; j < queries; j++) {
+                // Reading one operation at a time
                 String operation = sb.append(readFile.nextLine()).toString();
-                writer.printf("Case #%d: \n %s\n", TESTS, operation);
-                result = doOperation(operation, A, B);
+                // Cleaning StringBuilder
+                sb.delete(0, sb.capacity());
+
+                writer.println(operation);
+                // Identifying operation
+                result = doOperation(operation.trim(), A, B);
+                // Printing result
                 writer.print(printArray(result));
             }
-
-            sb.delete(0, sb.capacity());
-
+            // Cleaning result array
             zero(result);
-
         }
         writer.close();
     }
 
-    private static void getInput(int[][] list, Scanner input){
+    public static void getInput(int[][] list, Scanner input) {
         for (int i = 0; i < list.length; i++) {
             for (int j = 0; j < list[i].length; j++) {
                 list[i][j] = input.nextInt();
@@ -54,15 +56,16 @@ public class Main {
         }
     }
 
-    private static int[][] getArray(Scanner input){
+    public static int[][] getArray(Scanner input) {
         int column = input.nextInt();
         int row = input.nextInt();
         int[][] result = new int[column][row];
+        getInput(result, input);
         return result;
     }
 
-    private static int[][] doOperation(String operation, int[][] A, int[][] B) {
-        int[][] result = new int[A.length][A[0].length];
+    public static int[][] doOperation(String operation, int[][] A, int[][] B) {
+        int[][] result = new int[30][30];
 
         switch (operation) {
             case "SUM A B":
@@ -95,16 +98,18 @@ public class Main {
         return result;
     }
 
-    private static void zero(int[][] list) {
+    public static int[][] zero(int[][] list) {
+        // Looping throw array to clean it
         for (int i = 0; i < list.length; i++) {
             for (int j = 0; j < list[i].length; j++) {
                 list[i][j] = 0;
             }
         }
+        return list;
     }
 
 
-    private static String printArray(int[][] list) {
+    public static String printArray(int[][] list) {
         StringBuilder sb = new StringBuilder();
         outer:
         for (int[] aList : list) {
@@ -117,18 +122,6 @@ public class Main {
                 }
                 sb.append(anAList).append(" ");
             }
-        }
-        return (sb.toString());
-    }
-
-    private static String print_Array(int[][] list) {
-        StringBuilder sb = new StringBuilder();
-
-        for (int[] aList : list) {
-            for (int anAList : aList) {
-                sb.append(anAList).append(" ");
-            }
-            sb.append("\n");
         }
         return (sb.toString());
     }
